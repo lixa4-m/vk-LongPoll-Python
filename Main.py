@@ -12,6 +12,6 @@ for message in longpool.listen():
 
 # or
 
-for updates in longpool.listen():
+for updates in longpool.listen(True):
 	print()
 	print(updates)
