@@ -5,8 +5,10 @@ import requests
 import vk
 import configs
 
+LONGPOOL_VERSION = int(LONGPOOL_VERSION.replace(".",""))
+print(LONGPOOL_VERSION)
 
-class even_type(object):
+class even_type:
     MESSAGE_NEW = 'message_new'
     MESSAGE_REPLY = 'message_reply'
     MESSAGE_EDIT = 'message_edit'
@@ -83,14 +85,14 @@ class messages(object):
 
     def update(self, all_updates):
         if all_updates: return self.lp_updates
-        if LONGPOOL_VERSION == 5.103:
+        if LONGPOOL_VERSION >= 5103:
             return self.lp_updates['object']['message']
         else:
             return self.lp_updates['object']
 
 def listen(all_updates=False):
     token = configs.tokens()
-    api = vk.API(vk.Session(access_token=token), v=5.103)
+    api = vk.API(vk.Session(access_token=token), v=5.151)
     settings = api.groups.getById()
     group_id = settings[0]['id']
     GetInfo = api.groups.getLongPollServer(group_id=group_id)
@@ -102,7 +104,7 @@ def listen(all_updates=False):
         try:
             lp = requests.get(f'{server}?act=a_check&key={key}&ts={ts}&wait=60').json()
             if lp.get('failed') is not None:
-                key = api.groups.getLongPollServer(group_id=group_id, v=5.8)['key']
+                key = api.groups.getLongPollServer(group_id=group_id, v=5.151)['key']
             if ts != lp.get('ts') and lp.get('updates'):
                 if lp['updates'][0]['type'] =='message_new':
                     try:
