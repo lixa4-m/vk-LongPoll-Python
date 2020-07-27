@@ -1,4 +1,4 @@
-# LongPool of VK
+# LongPoll of VK
 
 <p align="center">
     <img src="https://img.shields.io/github/license/lixa4-m/vk-LongPool-Python?style=for-the-badge">
